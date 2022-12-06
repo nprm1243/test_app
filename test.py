@@ -13,11 +13,21 @@ contestant_list = {"ID":[]}
 
 # with open("contestants.json", "w") as outfile:
 #     json.dump(contestant_list, outfile)
-
-with open('D:\download\Source-20221205T115709Z-001\Source\contestants.json', 'r') as openfile:
-    contestant_list = json.load(openfile)
-with open('D:\download\Source-20221205T115709Z-001\Source\done.json', 'r') as openfile:
-    done_list = json.load(openfile)
+try:
+    with open('contestants.json', 'r') as openfile:
+        contestant_list = json.load(openfile)
+    with open('done.json', 'r') as openfile:
+        done_list = json.load(openfile)
+except:
+    tmp = {"ID": []}
+    with open("done.json", "w") as outfile:
+        json.dump(tmp, outfile)
+    with open("contestants.json", "w") as outfile:
+        json.dump(tmp, outfile)
+    with open('contestants.json', 'r') as openfile:
+        contestant_list = json.load(openfile)
+    with open('done.json', 'r') as openfile:
+        done_list = json.load(openfile)
 
 st.sidebar.title(f"Đề thi {CONTEST_NAME}")
 st.sidebar.header(f"{CONTEST_ROUND}")
@@ -86,8 +96,13 @@ if (studentID not in done_list["ID"]):
     ContestSubmitted = QuestionForm.form_submit_button("Nộp bài")
 
 if (ContestSubmitted):
-    result = pd.read_csv("D:/download/Source-20221205T115709Z-001/Source/result.csv")
     answer["total"] = [0]
+    try:
+        result = pd.read_csv("result.csv")
+    except:
+        df = pd.DataFrame(answer)
+        df.to_csv("result.csv")
+        result = pd.read_csv("result.csv")
     new_result = pd.concat([result, pd.DataFrame(answer)])
     new_result.to_csv("D:/download/Source-20221205T115709Z-001/Source/result.csv")
     st.header("Bài làm của bạn đã được ghi nhận")
