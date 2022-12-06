@@ -104,10 +104,10 @@ if (ContestSubmitted):
         df.to_csv("result.csv")
         result = pd.read_csv("result.csv")
     new_result = pd.concat([result, pd.DataFrame(answer)])
-    new_result.to_csv("D:/download/Source-20221205T115709Z-001/Source/result.csv")
+    new_result.to_csv("result.csv")
     st.header("Bài làm của bạn đã được ghi nhận")
     done_list["ID"].append(studentID)
-    with open("D:\download\Source-20221205T115709Z-001\Source\done.json", "w") as outfile:
+    with open("done.json", "w") as outfile:
         json.dump(done_list, outfile)
 
 if (submitted):
@@ -116,5 +116,5 @@ if (submitted):
         st.subheader("Trường hợp xảy ra sự số trong quá trình thi, thí sinh vui lòng báo lại ban tổ chức để có biện pháp xử lý kịp thời")
     else:
         contestant_list["ID"].append(studentID)
-        with open("D:\download\Source-20221205T115709Z-001\Source\contestants.json", "w") as outfile:
+        with open("contestants.json", "w") as outfile:
             json.dump(contestant_list, outfile)
